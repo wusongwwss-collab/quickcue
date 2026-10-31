@@ -21,3 +21,46 @@
 ## 许可
 
 Apache-2.0
+
+---
+
+## 快速开始（v0.1.0 已发布）
+
+QuickCue 会议侧采用「一个零依赖判定引擎 + 一个 MCP 服务器」的形态：判定引擎（`core/py/quickcue_engine.py`，纯 Python 标准库实现）本地完成角色判定、疑问强度打分、三层出卡闸（全局冷却 60 秒 / 同型冷却 180 秒 / 单场上限 12 张）与话术组卡——零 LLM、零联网、零第三方依赖。
+
+### 1. 挂进 MCP 宿主
+
+服务器为 stdio 形态（Python 3.10+，无需 pip 安装任何依赖）：
+
+```bash
+python <仓库路径>/hosts/mcp/meeting_server.py
+```
+
+宿主配置段示例（JSON，路径替换为你本机的仓库路径）：
+
+```json
+{
+  "mcpServers": {
+    "quickcue-meeting": {
+      "command": "python",
+      "args": ["/你的路径/quickcue/hosts/mcp/meeting_server.py"]
+    }
+  }
+}
+```
+
+配置保存后**重启宿主**，在工具列表确认 `cue.analyze` / `rules.validate` / `feedback.record` 真实可见（以宿主工具列表为准）。
+
+### 2. cue.analyze：出卡工具
+
+输入对话文本（含发言角色标注更佳，`role` 默认「客户」），对命中规则的客户疑问句返回一张「一句话提示卡」（话术参考 + 证据行 + 有效期），10 秒未处理自动过期，出卡频率由冷却闸克制。配套工具：`rules.validate` 校验规则面结构（建议每次改规则后先跑它）；`feedback.record` 记录对卡片的三态评价（对 / 不对 / 已处理），默认只落本地。
+
+### 3. 内置演示知识库：零配置出第一张卡
+
+`cue.analyze` 未注入知识库、也未配置外部知识库（环境变量 `QUICKCUE_KB_FILE`）时，自动回退到仓内**内置演示知识库**（常见客户疑问→话术），保证零配置喂一句客户疑问就出第一张演示卡。内置演示库仅用于开箱演示；生产用宿主注入自有知识库，外部注入优先于演示库。
+
+可以直接试示例对话：把 `examples/meeting_demo_input.txt` 里的客户疑问句逐句喂给 `cue.analyze`，观察哪些出卡、哪些被抑制。
+
+### 4. 规则包位置
+
+会议侧规则包在 `packs/meeting/rules.example.yaml`（闸参数 / 判据词表 / 话术模板全量示例，全部字段带中文注释；当前发行版引擎内置默认值与它逐字一致，规则文件自动加载属后续版本能力）。改规则流程与反馈隐私口径见 `packs/meeting/README.md` 与 `skills/SKILL.md`。
