@@ -4,5 +4,5 @@
 不依赖网络。
 
 - `meeting_demo_input.txt` — 示例客户对话文本流：在宿主对话里输入
-  「用示例对话跑一次会议哨：examples/meeting_demo_input.txt」，即可看到
+  「用示例对话跑一次会中辅助：examples/meeting_demo_input.txt」，即可看到
   第一张提示卡（约 30 秒，零模型调用、零联网）。

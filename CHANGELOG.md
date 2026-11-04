@@ -9,15 +9,15 @@
 - **零依赖判定引擎**：角色判定、疑问强度打分、三层出卡闸（全局冷却 60 秒 /
   同型冷却 180 秒 / 单场上限 12 张）与话术组卡全部本地完成，零 LLM、零联网、
   零第三方依赖（仅 Python 标准库）。
-- **会议辅助规则包（会议哨）**：客户疑问 / 异议 → 一句话提示卡；触发判定、
+- **会议辅助规则包（会中辅助）**：客户疑问 / 异议 → 一句话提示卡；触发判定、
   出卡闸（全局冷却 / 同型冷却 / 单场上限）与话术模板全部由 YAML 描述，
   `packs/meeting/rules.example.yaml` 提供全字段中文注释的规则面示例
   （当前版本引擎内置默认参数开箱即用，与示例逐字一致；规则文件自动加载
   属后续版本能力）。
-- **MCP stdio 服务器**：会议哨（`hosts/mcp/meeting_server.py`，Python stdio）
+- **MCP stdio 服务器**：会中辅助（`hosts/mcp/meeting_server.py`，Python stdio）
   MCP 服务器，可挂进任何支持 MCP 的宿主（Claude Desktop、VS Code 等），
   工具面：`cue.analyze` / `rules.validate` / `feedback.record`。
-- **内置演示知识库（零配置兜底）**：会议哨 MCP 的 `cue.analyze` 未注入知识库、
+- **内置演示知识库（零配置兜底）**：会中辅助 MCP 的 `cue.analyze` 未注入知识库、
   也未配置外部知识库（`QUICKCUE_KB_FILE`）时，回退到仓内内置演示知识库
   （常见客户疑问→话术，仅用于开箱演示；生产用宿主注入自有知识库，
   外部注入优先于演示库）。
