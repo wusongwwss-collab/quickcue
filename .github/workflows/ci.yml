@@ -21,3 +21,5 @@ jobs:
           node-version: 20
       - run: python -m pip install pytest
       - run: python -m pytest tests/ -q
+      # YQ-1154 T1 机闸挂载（G2 PII parity / G5 CONTRIBUTING 双用途；全量套已含，显式列出防窄化）
+      - run: python -m pytest tests/test_pii_parity.py tests/test_contributing_feedback.py -q
