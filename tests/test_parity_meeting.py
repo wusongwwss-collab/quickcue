@@ -23,10 +23,9 @@ import pytest
 # 公开仓仓根 = 本文件上两级
 PUB_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUB_ENGINE = os.path.join(PUB_ROOT, "core", "py", "quickcue_engine.py")
-# 产品仓底本路径（可用环境变量覆盖；parity 机闸在产品仓同机执行）
-MAIN_ENGINE = os.environ.get(
-    "NW_QUICKCUE_PARITY_SOURCE",
-    r"C:\yice\negotiation-workbench\app\quick_cue.py")
+# 产品仓底本路径：经环境变量 NW_QUICKCUE_PARITY_SOURCE 注入（parity 机闸在产品仓同机执行）；
+# 未注入或路径不存在时整体跳过，不影响公开仓功能测试。
+MAIN_ENGINE = os.environ.get("NW_QUICKCUE_PARITY_SOURCE") or ""
 
 # 双侧路径都注入 sys.path（兜底各自的模块内相对导入诉求；两份实现模块级仅依赖标准库）
 for _p in (os.path.dirname(MAIN_ENGINE), os.path.dirname(PUB_ENGINE)):
