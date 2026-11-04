@@ -1,6 +1,8 @@
 {
   "name": "quickcue",
+  "source": "quickcue",
   "display_name": "会中辅助",
+  "name_en": "QuickCue",
   "display_name_en": "QuickCue",
   "description": "客户问出口的那一刻，给你一句能接下去的话——本地规则判定，半秒出卡，零联网",
   "description_zh": "会议进行中客户抛出问题或异议时，对对话文本做疑问判定与强度打分，命中规则即出一张「一句话提示卡」（话术参考＋证据行＋有效期）。判定链零 LLM、零联网、零第三方依赖（仅 Python 标准库，需 Python 3.10+）；三层出卡闸（全局冷却、同型冷却、单场上限）克制打扰；话术与触发条件全在用户自己的规则包里，改动即时生效。",
@@ -8,5 +10,13 @@
   "category": "商业服务",
   "version": "0.1.0",
   "author": "弈枢AI Easur Work",
-  "type": "mcp"
+  "type": "mcp",
+  "examples_zh": [
+    "会议中客户问「这个价格能不能再优惠」，把这句话喂给 cue.analyze，立刻得到一张能直接说出口的话术参考卡（含证据行，10 秒未处理自动过期）",
+    "把 packs/meeting/rules.example.yaml 复制为 rules.yaml 改完冷却参数后，用 rules.validate 校验规则包结构，确认无字段错误再投入使用"
+  ],
+  "examples_en": [
+    "Customer pushes back on pricing mid-meeting: feed the line to cue.analyze and get a ready-to-say cue card with an evidence row, auto-expiring in 10 seconds",
+    "After tuning gate parameters in the rules pack, run rules.validate to verify the YAML structure before deploying it"
+  ]
 }

@@ -54,8 +54,9 @@ def _meta():
         return json.load(f)
 
 
-@pytest.mark.parametrize("field", ["name", "display_name", "display_name_en",
-                                   "description_zh", "category", "version", "author", "type"])
+@pytest.mark.parametrize("field", ["name", "source", "display_name", "display_name_en", "name_en",
+                                   "description_zh", "category", "version", "author", "type",
+                                   "examples_zh", "examples_en"])
 def test_meta_fields(field):
     assert _meta().get(field)
 
