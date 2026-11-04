@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "quickcue": {
+      "command": "python",
+      "args": ["${CONNECTOR_DIR}/hosts/mcp/meeting_server.py"],
+      "env": {}
+    }
+  }
+}

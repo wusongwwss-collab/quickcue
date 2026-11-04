@@ -1,0 +1,12 @@
+{
+  "name": "quickcue",
+  "display_name": "会中辅助",
+  "display_name_en": "QuickCue",
+  "description": "客户问出口的那一刻，给你一句能接下去的话——本地规则判定，半秒出卡，零联网",
+  "description_zh": "会议进行中客户抛出问题或异议时，对对话文本做疑问判定与强度打分，命中规则即出一张「一句话提示卡」（话术参考＋证据行＋有效期）。判定链零 LLM、零联网、零第三方依赖（仅 Python 标准库，需 Python 3.10+）；三层出卡闸（全局冷却、同型冷却、单场上限）克制打扰；话术与触发条件全在用户自己的规则包里，改动即时生效。",
+  "description_en": "Get one line you can actually say the moment your customer asks the hard question. Pure local rule engine, zero LLM, zero network, Python 3.10+ stdlib only.",
+  "category": "商业服务",
+  "version": "0.1.0",
+  "author": "弈枢AI Easur Work",
+  "type": "mcp"
+}
