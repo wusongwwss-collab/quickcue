@@ -2,6 +2,33 @@
 
 本项目更新日志遵循「人读优先」格式，版本号遵循语义化版本（SemVer）。
 
+## v0.2.0（2026-11-05）· 终端用户反馈管理 CLI
+
+### 新增
+
+- **终端反馈管理 CLI（`hosts/cli/feedback_cli.py`）**：QuickCue 原为纯 MCP 产品
+  （无 CLI），本版新增最小 CLI 面供终端用户管理匿名反馈——`on [L1|L2|L3]`（命令即
+  同意动作，缺省 L1）/ `off`（随时关）/ `show`（查看待上行，纯本地）/
+  `send [--yes]`（先逐条展示最终脱敏形态再确认；y/N 仅交互终端出现，非交互环境
+  须显式 `--yes`）/ `clear`（清空本地待上行，回执码台账保留）。仅 Python
+  标准库，Python 3.10+ 开箱即用。
+- **匿名反馈上行链路（默认关闭）**：发送走 `POST /api/oss-feedback/v1`，信封为
+  schema v1（product=quickcue / channel=github_npm / nonce 幂等键），HMAC 签名
+  传输（密钥经环境变量 `NW_OSS_FEEDBACK_HMAC` 注入，端点可用
+  `NW_OSS_FEEDBACK_ENDPOINT` 覆盖）。服务端校验失败（422 等）单条永久跳过并留
+  台账；网络/服务端故障指数退避重试 ≤3 次，不丢记录；游标逐条推进，重跑不重发。
+- **回执码（删除申请凭证）**：每条上行成功即在本地 `sentreceipts/` 留回执
+  （回执码 = nonce），30 天内可到隐私说明页凭码申请删除；`clear` 清空待上行
+  数据但保留回执台账。
+- **贡献双用途声明**：`CONTRIBUTING.md` 新增「数据回流与贡献双用途」章节——
+  社区规则/模板改进与反馈衍生的聚合改进，经「≥3 独立来源聚合 → 人工裁决」
+  审核后，同时用于本开源项目默认规则包与 Easur Work 商业产品。
+
+### 说明
+
+- 反馈产生面不变：仍由 MCP 宿主 `feedback.record` / 反馈 SDK `record` 落本机
+  `.quickcue/feedback.jsonl`，CLI 不提供写入口；不开反馈照常可用全部功能。
+
 ## v0.1.0（2026-10-31）· 首发版本
 
 ### 首发
